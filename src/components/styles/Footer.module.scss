@@ -1,0 +1,112 @@
+$backgroundColor: #181818;
+$cardBgColor:#1e1e1e;
+$hoverShodow:#ffffff1f;
+$shadowParams: -2px 2px 3px -1px ;
+$activeColor:#14a800;
+$hoverTextColor:#108a00;
+$textColor:#fff;
+
+footer{
+    padding: 64px 0 48px 0;
+    margin: 32px 0 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    border-top: 1px solid #333;
+
+    & .container{
+        padding: 0 80px;
+        margin: 0 73px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.footerColumns{
+    display: flex;
+    font-display: row;
+    align-items: flex-start;
+    gap: 32px;
+    width: 100%;
+
+    & .columns{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+
+        & .footerLinks{
+            color: $textColor;
+            padding: 4px;
+
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.socialMedia{
+    width: 100%;
+    margin: 24px 0;
+    padding: 16px 0;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & .socialMediaWeb, .socialMediaMobail{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        & .mediaTitle{
+            color: #676767;
+            font-size: 14px;
+            font-weight: 400;
+            margin-right: 16px;
+        }
+
+        & ul{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+
+            & li .mediaLinks{
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &:hover{
+                    background-color: #252525;
+                }
+
+                & svg{
+                    width: 24px;
+                    height: 24px;
+                }
+
+                & .fillSvg{
+                    fill: $textColor;
+                }
+
+                & .fillPath path{
+                    stroke: $textColor;
+                }
+            }
+        }
+    }
+}
+
+.footerBottom{
+    width: 100%;
+    text-align: center;
+    color: #676767;
+}

@@ -1,0 +1,625 @@
+$backgroundColor: #181818;
+$cardBgColor:#1e1e1e;
+$hoverShodow:#ffffff1f;
+$shadowParams: -2px 2px 3px -1px ;
+$activeColor:#14a800;
+$hoverTextColor:#108a00;
+$textColor:#fff;
+
+main{
+    margin: 0 73px;
+    padding: 32px 80px;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    align-items: flex-start;
+
+    & .mainColumn1{
+        width: 952px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+        padding-bottom: 16px;
+    }
+
+    & .mainColumn2{
+        width: 296px;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+
+    }
+}
+
+.sliderContainer{
+    width: 100%;
+    height: 250px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.searchContainer{
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.15s ease-in-out;
+    width: 100%;
+
+    & .searchForJob{
+        width: 100%;
+        height: max-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 8px 0 16px;
+        transition: all 0.15s ease-in-out;
+        border: 1px solid #8d8c8c;
+        border-radius: 8px;
+        gap: 8px;
+    
+        & .searchSvg{
+            width: 24px;
+            height: 24px;
+            & path{
+                stroke: $textColor;
+            }
+        }
+    
+        & input{
+            height: 40px;
+            width: 100%;
+            background-color: transparent;
+            color: $textColor;
+            border: 0;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        & .cleanValue{
+            background-color: transparent;
+            width: max-content;
+            height: max-content;
+            border: 0;
+
+            & svg{
+                width: 24px;
+                height: 24px;
+
+                & path{
+                    stroke: $textColor;
+                }
+            }
+        }
+    }  
+}
+
+.searchContainer:hover{
+    border: 1px solid $textColor;
+
+    & .searchForJob{
+        border: 1px solid $textColor;
+    }
+}
+
+.searchContainer:focus-within{
+    border: 1px solid $textColor;
+
+    & .searchForJob{
+        border: 1px solid $textColor;
+    }
+}
+
+.jobContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    & .containerTitle{
+        padding-bottom: 10px;
+        color: #8d8c8c;
+        font-size: 20px;
+        font-weight: 550;
+    }
+}
+
+.tabJobs{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+
+    & .tabButtons{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+
+        & button{
+            padding: 0 4px;
+            color: #a5a5a5;
+            font-size: 16px;
+            font-weight: 550;
+            background-color: transparent;
+            border: 0;
+            height: 38px;
+            width: max-content;
+            white-space: nowrap;
+        }
+
+        & .active{
+            color: $textColor !important;
+            position: relative;
+
+            &::before{
+                content: '';
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                border-bottom: 1px solid $backgroundColor;
+                z-index: 1;
+            }
+        }
+
+        &::after{
+            content: '';
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-bottom: 1px solid #333;
+        }
+    }
+
+    & .tabDescription{
+        font-size: 14px;
+        font-weight: 400;
+        padding: 16px;
+        color: #a5a5a5;
+        border-bottom: 1px solid #333;
+    }
+}
+
+.jobBox{
+    padding: 16px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #252525;
+
+        & .jobTitlePublishDate .jobNameAction .jobLinkTitle{
+            color: $activeColor;
+        }
+    }
+
+    & .jobTitlePublishDate{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        margin-bottom: 8px;
+
+        
+
+        & .jobNameAction{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 5px;
+    
+            & .jobDatePublish{
+                color: #a5a5a5;
+                font-size: 12px;
+                font-weight: 500;
+            }
+    
+            & .jobLinkTitle{
+                color: #a5a5a5;
+                font-size: 20px;
+                font-weight: 500;
+
+                &:hover{
+                    color: $activeColor;
+                    text-decoration: underline;
+                }
+
+                &:focus{
+                    color: $activeColor;
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        & .jobDisLikeSaveBtns{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+
+            & button{
+                width: 40px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: transparent;
+                border: 0;
+
+                & svg{
+                    width: 24px;
+                    height: 24px;
+
+                    & path:nth-child(1){
+                        stroke: $textColor;
+                    }
+                    
+                    & path:nth-child(2){
+                        fill: $textColor;
+                        stroke: $textColor;
+                    }
+                }
+            }
+        }
+    }
+
+    & .jobBudget{
+        color: #a5a5a5;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    & .jobDescription{
+        font-size: 16px;    
+        color: $textColor;
+        line-height: 150%;
+    }
+
+    & .jobTags{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 8px;
+
+        & .tagName{
+            background-color: #333333;
+            color: #a5a5a5;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 0 12px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10rem;
+        }
+    }
+
+    & .ratingPaymentLocation{
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        justify-content: flex-start;
+
+        & .payemntVerifyStatus{
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            color: #a5a5a5;
+            font-size: 14px;
+            font-weight: 500;
+
+            & svg{
+                width: 16px;
+                height: 16px;
+            }
+
+            & .verified{
+                & path:nth-child(1){
+                    fill: #a5a5a5;
+                }
+                & path:nth-child(2){
+                    stroke: #001e00;
+                }
+            }
+            
+            & .unverified{
+                stroke: #a5a5a5;
+            }
+        }
+
+        & .rating {
+            display: flex;
+            align-items: center;
+
+            & input {
+                display: none;
+            }
+
+            & label {
+                float: right;
+                cursor: pointer;
+                color: #333;
+
+                &::before {
+                    content: '\2605';
+                    font-size: 18px;
+                    padding-right: 2px;
+                }
+
+                &.filled {
+                    color: #df7606;
+                }
+            }
+        }
+
+        & .jobLocation{
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #a5a5a5;
+            font-size: 14px;
+            font-weight: 500;
+
+            & svg{
+                width: 16px;
+                height: 16px;
+
+                & path{
+                    stroke: #a5a5a5;
+                }
+            }
+        }
+
+    }
+
+    & .jobPorposals{
+        color: #a5a5a5;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.rightColumnBox{
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+
+    & .userImageName{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
+
+        & .userImage{
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+        }
+
+        & .namePosition{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+
+            .userName{
+                font-size: 20px;
+                font-weight: 500;
+                text-decoration: underline;
+                color: $textColor;
+                transition: all 0.1s ease-in-out;
+            }
+
+            .position{
+                font-size: 16px;
+                font-weight: 500;
+                margin-bottom: 8px;
+                color: $textColor;
+            }
+        }
+
+        &:hover .namePosition .userName{
+            color: $hoverTextColor;
+        }
+
+        &:focus .namePosition .userName{
+            color: $hoverTextColor;
+        }
+    }
+
+    & .profileCompleteItems{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+        gap: 16px;
+
+        & .profileTools{
+            display: flex;
+            align-items: center;
+            gap: 24px;
+
+            & div{
+                position: relative;
+                background-color: #333333;
+                height: 4px;
+                width: 100%;
+                overflow: hidden;
+                border-radius: 10rem;
+
+                &::before{
+                    content: "";
+                    width: 40%;
+                    height: 100%;
+                    background-color: #fff;
+                    border-radius: 10rem;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+            }
+
+            & span{
+                color: $textColor;
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+.accardion{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: $textColor;
+
+    & .accardionButton{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        & span{
+            font-size: 20px;
+            font-weight: 500;
+        }
+    }
+
+    & .accardionItems{
+        overflow-y: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+.promoteAds{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 24px;
+
+    & .availableBadje{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        
+        & .editRow{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 4px;
+
+            & div:nth-child(1){
+                color: $textColor;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 150%;
+            }
+
+            & div:nth-child(2){
+                color: #a5a5a5;
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+    }
+
+    & .viewDetils{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        & a:nth-child(1), a:nth-child(3){
+            color: $activeColor;
+            font-size: 16px;
+            text-decoration: underline;
+
+            &:hover{
+                color: $hoverTextColor;
+            }
+        }
+
+        & span{
+            margin: 0 4px;
+            color: $textColor;
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+}
+
+.editButton{
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+
+    &:hover{
+        background-color: #252525;
+    }
+
+    & svg{
+        width: 16px;
+        height: 16px;
+        & path{
+            stroke: $textColor;
+        }
+    }
+}
+
+.profileSettings{
+    font-size: 14px;
+    color: $activeColor;
+    text-decoration: underline;
+
+    &:hover{
+        color: $hoverTextColor;
+    }
+}
+
+.slidebarItems{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap:12px;
+
+    & .slidebarLinks{
+        display: flex;
+        justify-content: flex-start;
+        color: $textColor;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: underline;
+
+        & svg{
+            width: 16px;
+            height: 16px;
+            margin-left: 5px;
+            & path{
+                stroke: $textColor;
+            }
+        }
+    }
+}

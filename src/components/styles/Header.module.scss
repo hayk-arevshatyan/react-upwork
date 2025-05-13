@@ -1,0 +1,501 @@
+$backgroundColor: #181818;
+$cardBgColor:#1e1e1e;
+$hoverShodow:#ffffff1f;
+$shadowParams: -2px 2px 3px -1px ;
+$activeColor:#14a800;
+$hoverTextColor:#108a00;
+$textColor:#fff;
+
+body{
+    user-select: none;
+    letter-spacing: 0.42px;
+}
+
+a, img, svg{
+    user-select: none;
+}
+
+::selection{
+    background-color: $backgroundColor;
+}
+
+header{
+    padding: 0 24px;
+    background-color: $backgroundColor;
+    height: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    // LOGO, MENU, DROPDOWNS...
+
+    & .mainMenu{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 500;
+        color: $textColor;
+
+        & .navItems{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: max-content;
+            padding: 10px;
+            gap: 5px;
+            transition: all 0.15s ease-in-out;
+
+            & span:first-child{
+                cursor: pointer;
+            }
+
+            & svg{
+                width: 9px;
+                fill: $textColor;
+                cursor: pointer;
+            }
+        }
+
+        & li:first-child{
+            padding: 0;
+            margin-right: 25px;
+        }
+
+        & .navItems:hover{
+            & span:first-child{
+                color: $hoverTextColor;
+            }
+
+            & svg{
+                fill: $hoverTextColor;
+            }
+        }
+
+        & li:first-child svg{
+            width: 82px;
+            height: 22px;
+            fill: #fff;
+            display: flex;
+        }
+
+        & .navItems .dropdownMenu{
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: left;
+            position: absolute;
+            top: 100%;
+            left: 0%;
+            min-width: 240px;
+            z-index: 1;
+            padding: 9px 0;
+            background-color: $backgroundColor;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px 2px #ffffff1f,0 0 0 1px #333;
+        
+            &::before{
+                content: '';
+                display: block;
+                position: absolute;
+                top: -7px;
+                left: 28px;
+                transform: translateX(-50%) rotate(135deg);
+                background-color: $backgroundColor;
+                border-color: #0000 #0000 $backgroundColor $backgroundColor;
+                box-shadow: -2px 2px 3px -1px $hoverShodow;
+                border: 7px solid $backgroundColor;
+            }
+
+            & li {
+                padding: 6px 15px;
+                font-weight: 500;
+                font-size: 14px;
+                width: 100%;
+                
+                &:hover{
+                    background-color: #252525;
+                }
+
+                & .dropdownList{
+                    color: $textColor;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+            }
+
+            & .seperator{
+                width: 100%;
+                border-bottom: 1px solid #333;
+                margin: 5px auto;
+            }
+
+            & .halfList{
+                padding: 6px 10px;
+                color: #a5a5a5;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        & .navItems:hover .dropdownMenu{
+            display: flex;
+        }
+    }
+
+    // SEARCH BAR, NOTIF, HELP...
+
+    & .searchNotifAccountNav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+
+        & button{
+            background-color: transparent;
+            border: 0;
+        }
+
+        & .searchBar{
+            display: flex;
+            align-items: center;
+            border: 1px solid #8d8c8c;
+            border-radius: 8px;
+            height: 38px;
+
+            & .searchForm{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                padding: 1px 5px 0 15px;
+                border: 2px solid transparent;
+                border-radius: 8px;
+                position: relative;
+                transition: all .15s ease-in-out;
+                height: 36px;
+                width: 297px;
+                
+                & input {
+                    background-color: transparent;
+                    border: 0;
+                    color: #f8fbff;
+                    font-size: 14px;
+                    width: 100%;
+                }
+
+                & input::placeholder{
+                    color: #9c9ca1;
+                }
+
+                & .searchSvg{
+                    width: 20px;
+                    height: 20px;
+                    stroke: #f8fbff;
+                }
+
+                & .cleanInputSvg{
+                    width: 20px;
+                    height: 20px;
+                    fill: #f8fbff;
+                }
+
+                & button{
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            & .searchForm::before{
+                content: '';
+                position: absolute;
+                right: -3px;
+                height: 19px;
+                border-right: 1px solid #8d8c8c;
+                padding-left: 5px;
+            }
+
+            & .searchForm:hover{
+                border: 2px solid $textColor;
+            }
+
+            & .searchForm:focus-within{
+                border: 2px solid $textColor;
+            }
+
+            & .jobsSelectBtn{
+                transition: all .15s ease-in-out;
+                padding: 0px 15px 0 15px;
+                border: 2px solid transparent;
+                border-radius: 8px;
+                height: 36px;
+                color: #fff;
+                font-weight: 500;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                gap: 5px;
+                justify-content: center;
+                position: relative;
+
+                & svg{
+                    width: 9px;
+                    fill: $textColor;
+                }
+
+                & .jobSelectDropdown{
+                    display: none;
+                    position: absolute;
+                    top: 45px;
+                    left: 0;
+                    min-width: 240px;
+                    cursor: initial;
+                    border-radius: 8px;
+                    box-shadow: 0 8px 24px 2px #ffffff1f,0 0 0 1px #333;
+                    background-color: $backgroundColor;
+                    padding: 7px 0;
+
+                    & ul{
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+
+                        & .jobList {
+                            width: 100%;
+
+                            & button{
+                                width: 100%;
+                                padding: 6px 15px;
+                                display: flex;
+                                flex-direction: row;
+                                align-items: flex-start;
+                                gap: 5px;
+                                
+                                &:hover{
+                                    background-color: #252525;
+                                }
+    
+                                & svg{
+                                    width: 24px;
+                                    height: 24px;
+                                    fill: transparent;
+                                    stroke: $textColor;
+                                }
+    
+                                & .jobType{
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                    gap: 5px;
+    
+                                    & .typeTitle{
+                                        font-style: 14px;
+                                        font-weight: 500;
+                                        color: $textColor;
+                                    }
+    
+                                    & .typeDescription{
+                                        font-size: 12px;
+                                        font-weight: 500;
+                                        color: #a5a5a5;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            & .jobsSelectBtn:hover{
+                border: 2px solid $textColor;
+            }
+
+            & .jobsSelectBtn:focus-within{
+                border: 2px solid $textColor !important;
+
+                & .jobSelectDropdown{
+                    display: flex;
+                }
+            }
+        }
+
+        & .navbarHelpBtns{
+            width: 44px;
+            height: 44px;
+            position: relative;
+            
+            & svg{
+                width: 24px;
+                height: 24px;
+                stroke: $textColor  ;
+            }
+
+            & img{
+                width: 32px;
+                height: 32px;
+                border-radius: 100%;
+                border: 1px solid $hoverShodow;
+            }
+        }
+
+        & .dropdownMenu{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            & li {
+                padding: 6px 15px;
+                font-weight: 500;
+                font-size: 14px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                
+                &:hover{
+                    background-color: #252525;
+                }
+
+                & .dropdownList{
+                    color: $textColor;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                }
+                
+                & .userTools .userToolsBox{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 15px;
+
+                    & img{
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                    }
+                    & .userItems{
+                        display: flex;
+                        flex-direction: column;
+                        
+                        & span:nth-child(1){
+                            color: $textColor;
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+                        
+                        & span:nth-child(2){
+                            color: #a5a5a5;
+                            font-size: 12px;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+
+            & .messageToggle{
+                padding: 15px 25px 10px 25px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                & span:first-child{
+                    color: $textColor;
+                    font-weight: 500;
+                    font-size: 14px;
+                }
+
+                & .toggleMessageOff{
+                    width: 29px;
+                    height: 19px;
+                    border-radius: 10px;
+                    position: relative;
+                    border: 2px solid #8d8c8c;
+                    background-color: #8d8c8c;
+                    transition: all 0.3s ease-in-out;
+
+                    &:hover{
+                        border: 2px solid #535353;
+                        background-color: #535353;
+                    }
+                    
+                    & .circle{
+                        width: 10px;
+                        height: 10px;
+                        background-color: $textColor;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: -4px;
+                        transform: translate(2px, 6px);
+                        transition: all 0.3s ease-in-out;
+                    }
+                }
+
+                & .toggleMessageOn{
+                    border: 2px solid #14a800 !important;
+                    background-color: #14a800 !important;
+
+                    &:hover{
+                        border: 2px solid #108a00 !important;
+                        background-color: #108a00 !important;
+                    }
+
+                    & .circle{
+                        transform: translate(14px, 6px) !important;
+                    }
+                }
+            }
+
+            & .profileTools{
+                display: flex;
+                justify-content: center;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+
+                & svg{
+                    width: 24px;
+                    height: 24px;
+
+                    & path, circle{
+                        stroke: $textColor;
+                    }
+                }
+
+                & span{
+                    font-size: 14px;
+                    color: $textColor;
+                    font-weight: 500;
+                }
+
+            }
+
+            & .seperator{
+                width: 100%;
+                border-bottom: 1px solid #333;
+                margin: 5px auto;
+            }
+
+            & .halfList{
+                padding: 6px 10px;
+                color: #a5a5a5;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        & .navbarHelpBtns:focus-within .dropdownMenu{
+            display: flex;
+        }
+    }
+}
+
+.dNone{
+    display: none !important;
+}

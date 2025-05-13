@@ -1,13 +1,34 @@
-body {
+*{
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  font-family: 'Neue Montreal', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('https://www.upwork.com/static/fonts-global/4.5.1/neue-montreal-variable.woff2') format('woff2');
+}
+
+body {
+  margin: 0;
+  background-color: #181818;
+  min-height: 100vh;
+  max-width: 1920px;
+}
+
+button, input, select, textarea{
+  outline: none;
+}
+
+li{
+  list-style: none;
+}
+
+a{
+  text-decoration: none ;
+}
+
+button{
+  cursor: pointer;
 }
