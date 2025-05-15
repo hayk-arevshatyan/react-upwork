@@ -1,8 +1,18 @@
-import React, {useState, useReducer, useRef} from "react";
+import React, {useState, useReducer, useRef, useEffect} from "react";
 import { Link } from "react-router-dom";
 import pageStyles from "./pageStyles/Main.module.scss";
 import { JobProvider, useJobContext } from './useJobContext';
 import UserImage from "../assets/images/userImage.jpg";
+
+// SVG
+import { ReactSVG } from 'react-svg';
+import BannerImage1 from "../assets/images/bannerImg1.svg";
+import BannerImage2 from "../assets/images/bannerImg2.svg"
+import BannerImage3 from "../assets/images/bannerImg3.svg";
+
+// SKELETON LOADER
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // SLIDER SWIPER
 import './pageStyles/Swiper.css';
@@ -20,6 +30,41 @@ function reducer(state, {action, type}) {
       return state;
   }
 }
+
+// SHOW MORE AND LESS
+
+const ShowMoreLess = ({ text, maxLength }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [height, setHeight] = useState('auto');
+    const contentRef = useRef(null);
+
+    useEffect(() => {
+        if (contentRef.current) {
+            if (isExpanded) {
+                setHeight(`${contentRef.current.scrollHeight}px`);
+            } else {
+                setHeight('70px');
+            }
+        }
+    }, [isExpanded, text]);
+
+    if (text.length <= maxLength) {
+        return <p>{text}</p>;
+    }
+    
+    return (
+        <>
+            <div style={{ height, overflow: 'hidden', transition: 'all 0.5s ease-in-out'}}>
+                <p ref={contentRef} style={{ margin: 0 }}>
+                    {isExpanded ? text : `${text.substring(0, maxLength)}...`}
+                </p>
+            </div>
+            <span onClick={() => setIsExpanded(!isExpanded)} className={pageStyles.descriptionToggle}>
+                {isExpanded ? 'less' : 'more'}
+            </span>
+        </>
+    );
+};
 
 // JOB CONTEXT
 
@@ -45,7 +90,9 @@ const JobList = () => {
                         </div>
                     </div>
                     <p className={pageStyles.jobBudget}>Fixed-price - Intermediate - Est. Budget: {job.budget}</p>
-                    <p className={pageStyles.jobDescription}>{job.description}</p>
+                    <p className={pageStyles.jobDescription}>
+                        <ShowMoreLess text={job.description} maxLength={350} />
+                    </p>
                     <div className={pageStyles.jobTags}>
                         {job.tags.map((tag, index) => (
                             <span className={pageStyles.tagName} key={index}>{tag}</span>
@@ -68,18 +115,13 @@ const JobList = () => {
                         </span>
                         <div className={pageStyles.rating}>
                             {[1, 2, 3, 4, 5].map((star) => (
-                                <React.Fragment key={star}>
-                                    <input
-                                    type="radio"
-                                    id={`${star}`}
-                                    name="rating"
-                                    value={star}
-                                    />
+                                <span key={star}>
+                                    <input type="radio" id={star} name="rating" value={star}/>
                                     <label
                                         htmlFor={`${star}`}
                                         className={star <= job.rating && pageStyles.filled}
                                     ></label>
-                                </React.Fragment>
+                                </span>
                             ))}
                         </div>
                         <span style={{fontSize: '14px', fontWeight: 500, color: "#a5a5a5"}}>{job.amountSpent} spent</span>
@@ -105,9 +147,9 @@ const Accardion = ({children, button}) => {
 
     return(
         <div className={pageStyles.accardion}>
-            <div onClick={openDropdown} className={pageStyles.accardionButton}>
-                <span>{button}</span>
-                <svg style={{transform: isOpen && "rotate(180deg)", fill: '#fff', width: "14px", height: "14px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
+            <div className={pageStyles.accardionButton}>
+                <span onClick={openDropdown}>{button}</span>
+                <svg style={{transform: isOpen && "rotate(180deg)"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>
             </div>
             <div 
                 ref={accardionRef}
@@ -121,8 +163,17 @@ const Accardion = ({children, button}) => {
 }
 
 const Main = () => {
-    const[input, setInput] = useState('');
+    const [input, setInput] = useState('');
+    const [loader, setLoader] = useState(false);
     const [state, dispatch] = useReducer(reducer, { activeTab: 'Best Matches' });
+
+    const handleSkeleton = () => {
+        if (loader === false) {
+            setTimeout(() => {setLoader(!loader);}, 1000);
+        }else{
+            setLoader(!loader);
+        }
+    }
 
     return(
         <main>
@@ -136,7 +187,7 @@ const Main = () => {
                         centeredSlides={true}
                         loop={true}
                         autoplay={{
-                            delay: 5000,
+                            delay: 8000,
                             disableOnInteraction: false,
                         }}
                         pagination={{
@@ -146,17 +197,59 @@ const Main = () => {
                             },
                         }}
                         navigation={false}
+                        allowTouchMove={false}
+                        simulateTouch={false}
+                        speed={500}
                         modules={[Autoplay, Pagination, Navigation]}
                         className="mySwiper"
                     >
-                        <SwiperSlide style={{backgroundColor: "#13544e"}}>
-                            <div></div>
+                        <SwiperSlide style={{backgroundColor: "#13544e", padding: "32px"}}>
+                            <div className={pageStyles.indexSlider}>
+                                <div className={pageStyles.bannerTitleButton}>
+                                    <div className={pageStyles.bannerHeader}>
+                                        <span className={pageStyles.title1}>Freelancer Plus with new perks</span>
+                                        <span className={pageStyles.title2}>100 monthly Connects and full access to Uma, Upwork's Mindful AI.</span>
+                                    </div>
+                                    <div className={pageStyles.bannerButton}>
+                                        <button>Learn more</button>
+                                    </div>
+                                </div>
+                                <div className={pageStyles.bannerSvg}>
+                                    <ReactSVG src={BannerImage1} />
+                                </div>
+                            </div>
                         </SwiperSlide>
-                        <SwiperSlide style={{backgroundColor: "#13544e"}}>
-                            <div></div>
+                        <SwiperSlide style={{backgroundColor: "#14a800", padding: "32px"}}>
+                            <div className={pageStyles.indexSlider}>
+                                <div className={pageStyles.bannerTitleButton}>
+                                    <div className={pageStyles.bannerHeader}>
+                                        <span className={pageStyles.title1}>Upwork 101 will guide you through the basics of our platform.</span>
+                                        <span className={pageStyles.title2}>Learn how to get started on Upwork</span>
+                                    </div>
+                                    <div className={pageStyles.bannerButton}>
+                                        <button>Explore Upwork 101</button>
+                                    </div>
+                                </div>
+                                <div className={pageStyles.bannerSvg}>
+                                    <ReactSVG src={BannerImage2}/>
+                                </div>
+                            </div>
                         </SwiperSlide>
-                        <SwiperSlide style={{backgroundColor: "#14a800"}}>
-                            <div></div>
+                        <SwiperSlide style={{backgroundColor: "#13544e", padding: "32px"}}>
+                            <div className={pageStyles.indexSlider}>
+                                <div className={pageStyles.bannerTitleButton}>
+                                    <div className={pageStyles.bannerHeader}>
+                                        <span className={pageStyles.title1}>Rise to the top of the client's list</span>
+                                        <span className={pageStyles.title2}>Boosted Proposals deliver 10x more earnings on ad spend</span>
+                                    </div>
+                                    <div className={pageStyles.bannerButton}>
+                                        <button>Boost now</button>
+                                    </div>
+                                </div>
+                                <div className={pageStyles.bannerSvg}>
+                                    <ReactSVG src={BannerImage3} />
+                                </div>
+                            </div>
                         </SwiperSlide>
                     </Swiper>
                 </div>
@@ -244,12 +337,18 @@ const Main = () => {
                 </div>
 
                 <div className={pageStyles.rightColumnBox}>
-                    <Accardion button="Promote with ads">
+                    <Accardion button={<button onClick={handleSkeleton}>Promote with ads</button>}>
                         <div className={pageStyles.promoteAds}>
                             <div className={pageStyles.availableBadje}>
                                 <div className={pageStyles.editRow}>
                                     <div>Availability badge</div>
-                                    <div>Off</div>
+                                    {loader === true ? (
+                                        <dir>Off</dir>
+                                    ) : (
+                                        <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                                            <p><Skeleton borderRadius={10}/></p>
+                                        </SkeletonTheme>
+                                    )}
                                 </div>
                                 <button className={pageStyles.editButton}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" role="img"><path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.734 5.544l3.708 3.702"></path><path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.488 20.551l-1.919.41A1.3 1.3 0 013 19.393l.38-1.916c.098-.508.35-.975.72-1.337L16.492 3.768a2.6 2.6 0 013.698 0v0a2.595 2.595 0 01.571 2.847 2.595 2.595 0 01-.571.845L7.827 19.833c-.363.37-.83.62-1.339.718v0z" clip-rule="evenodd"></path></svg>
@@ -257,8 +356,14 @@ const Main = () => {
                             </div>
                             <div className={pageStyles.availableBadje}>
                                 <div className={pageStyles.editRow}>
-                                    <div>Availability badge</div>
-                                    <div>Off</div>
+                                    <div>Boost your profile</div>
+                                    {loader === true ? (
+                                        <dir>Off</dir>
+                                    ) : (
+                                        <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                                            <p><Skeleton borderRadius={10}/></p>
+                                        </SkeletonTheme>
+                                    )}
                                 </div>
                                 <button className={pageStyles.editButton}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" viewBox="0 0 24 24" role="img"><path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.734 5.544l3.708 3.702"></path><path vector-effect="non-scaling-stroke" stroke="var(--icon-color, #001e00)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.488 20.551l-1.919.41A1.3 1.3 0 013 19.393l.38-1.916c.098-.508.35-.975.72-1.337L16.492 3.768a2.6 2.6 0 013.698 0v0a2.595 2.595 0 01.571 2.847 2.595 2.595 0 01-.571.845L7.827 19.833c-.363.37-.83.62-1.339.718v0z" clip-rule="evenodd"></path></svg>
@@ -269,7 +374,7 @@ const Main = () => {
                 </div>
 
                 <div className={pageStyles.rightColumnBox}>
-                    <Accardion button="Connects: 132">
+                    <Accardion button={<span>Connects: 132</span>}>
                         <div className={pageStyles.promoteAds}>
                             <div className={pageStyles.viewDetils}>
                                 <Link to="/">View details</Link>
@@ -282,7 +387,7 @@ const Main = () => {
 
                 <div className={pageStyles.rightColumnBox}>
                     <div style={{paddingBottom: "16px"}}>
-                        <Accardion button="Preferences">
+                        <Accardion button={<span>Preferences</span>}>
                             <div className={pageStyles.promoteAds}>
                                 <div className={pageStyles.availableBadje} style={{paddingBottom: "16px"}}>
                                     <div className={pageStyles.editRow}>
@@ -324,7 +429,7 @@ const Main = () => {
                         </Accardion>
                     </div>
                     <div style={{padding: "16px 0", borderTop: "1px solid #333"}}>
-                        <Accardion button="Proposals">
+                        <Accardion button={<span>Proposals</span>}>
                             <div className={pageStyles.promoteAds} style={{paddingTop: "8px"}}>
                                 <div className={pageStyles.availableBadje}>
                                     <div className={pageStyles.editRow}>
@@ -336,7 +441,7 @@ const Main = () => {
                         </Accardion>
                     </div>
                     <div style={{paddingTop: "16px", borderTop: "1px solid #333"}}>
-                        <Accardion button="Project Catalog">
+                        <Accardion button={<span>Project Catalog</span>}>
                             <div className={pageStyles.promoteAds} style={{paddingTop: "8px"}}>
                                 <div className={pageStyles.availableBadje}>
                                     <div className={pageStyles.editRow}>

@@ -8,7 +8,7 @@ const jobPosts = [
     budget: "$300",
     priceType: "Fixed-price",
     level: "Intermediate",
-    description: "I need someone to copy the style of a website and I would like it to be rebranded for me. It is already a template. I need this to be done by the end of the week.",
+    description: "We are looking for a skilled front-end developer to convert our Figma website design into a fully functional HTML website in both desktop and mobile. The site is a scrolling one-page website. The ideal candidate should have experience with responsive design and be able to translate our visual assets into clean, semantic HTML and CSS. Attention to detail is essential to ensure that the final product matches the original design. If you have a strong portfolio demonstrating your capabilities in web development, we would love to hear from you!",
     tags: ["Web Development", "Web Design"],
     paymentVerified: true,
     rating: 4,
